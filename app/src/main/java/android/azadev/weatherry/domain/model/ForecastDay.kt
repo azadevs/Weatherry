@@ -6,8 +6,11 @@ package android.azadev.weatherry.domain.model
  */
 
 data class ForecastDay(
-    val astro: Astro,
+    val icon: String,
+    val maxTemp: Int,
+    val minTemp: Int,
     val dateEpoch: Long,
-    val day: Day,
-    val hour: List<Hour>
+    val hour: List<Hour>,
+    val sunrise: String,
+    val sunset: String
 )

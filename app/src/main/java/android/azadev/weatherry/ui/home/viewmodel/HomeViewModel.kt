@@ -45,15 +45,15 @@ class HomeViewModel(private val repository: WeatherRepository) : ViewModel() {
                 _currentState.value =
                     Resource.Success(
                         CurrentWeatherDisplayData(
-                            cityName = data.location.cityName,
-                            date = parseLongToDate(data.forecast.forecastday.first().dateEpoch),
+                            cityName = data.current.cityName,
+                            date = parseLongToDate(data.forecast.first().dateEpoch),
                             currentTemp = data.current.tempC,
-                            minTemp = data.forecast.forecastday.first().day.minTemp,
-                            maxTemp = data.forecast.forecastday.first().day.maxTemp,
-                            icon = Constants.fromWMO(data.current.condition.code),
-                            condition = data.current.condition.text,
-                            sunrise = data.forecast.forecastday.first().astro.sunrise,
-                            sunset = data.forecast.forecastday.first().astro.sunset,
+                            minTemp = data.forecast.first().minTemp,
+                            maxTemp = data.forecast.first().maxTemp,
+                            icon = Constants.fromWMO(data.current.code),
+                            condition = data.current.text,
+                            sunrise = data.forecast.first().sunrise,
+                            sunset = data.forecast.first().sunset,
                             currentWeatherDetails = CurrentWeatherDetails(
                                 wind = data.current.windKph,
                                 pressure = data.current.pressureIn,
@@ -76,12 +76,12 @@ class HomeViewModel(private val repository: WeatherRepository) : ViewModel() {
             try {
                 val data = repository.getWeatherDataByLocation("${41.377491},${64.585262}")
                 _forecastState.value = Resource.Success(
-                    ForecastDisplayData(data.forecast.forecastday.map {
+                    ForecastDisplayData(data.forecast.map {
                         ForecastDayDisplayData(
                             dayOfWeek = parseLongToDayOfWeek(it.dateEpoch),
-                            maxTemp = it.day.maxTemp,
-                            minTemp = it.day.minTemp,
-                            icon = it.day.icon,
+                            maxTemp = it.maxTemp,
+                            minTemp = it.minTemp,
+                            icon = it.icon,
                             hour = it.hour.map { hour ->
                                 ForecastHour(
                                     icon = hour.icon,

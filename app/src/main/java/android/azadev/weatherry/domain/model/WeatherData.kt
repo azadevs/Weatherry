@@ -7,6 +7,5 @@ package android.azadev.weatherry.domain.model
 
 data class WeatherData(
     val current: Current,
-    val forecast: Forecast,
-    val location: Location
+    val forecast: List<ForecastDay>,
 )

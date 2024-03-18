@@ -6,12 +6,14 @@ package android.azadev.weatherry.domain.model
  */
 
 data class Current(
-    val condition: Condition,
     val humidity: Int,
     val precipIn: Double,
     val pressureIn: Double,
     val tempC: Int,
     val uv: Double,
     val windKph: Double,
-    val vis: Double
+    val vis: Double,
+    val text: String,
+    val code: Int,
+    val cityName: String
 )
