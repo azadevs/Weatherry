@@ -26,8 +26,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:textSize="16sp"
         android:alpha="0.7"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/ubuntu_condesed"
         tool:text="06:00" />
 
 </LinearLayout>
