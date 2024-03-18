@@ -7,6 +7,8 @@ import android.azadev.weatherry.ui.model.ForecastDisplayData
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
+import com.bumptech.glide.Glide
 
 /**
  * Created by : Azamat Kalmurzayev
@@ -16,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 class ForecastDayAdapter(
     private val forecastDays: ForecastDisplayData
 ) : RecyclerView.Adapter<ForecastDayAdapter.DayViewHolder>() {
-
+    val pool = RecycledViewPool()
 
     inner class DayViewHolder(private val binding: ItemDayBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -28,7 +30,10 @@ class ForecastDayAdapter(
                 tvMinTemperature.text =
                     root.resources.getString(R.string.text_temperature, data.minTemp)
 
+                Glide.with(root).load("https:${data.icon}").into(ivWeatherImage)
+
                 val hourAdapter = ForecastHourAdapter(data.hour)
+                rvHour.setRecycledViewPool(pool)
                 rvHour.adapter = hourAdapter
             }
         }

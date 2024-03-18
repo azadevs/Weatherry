@@ -19,7 +19,7 @@ class ForecastHourAdapter(private val forecastHours: List<ForecastHour>) :
         fun onBind(data: ForecastHour) {
             binding.apply {
                 tvTime.text = data.time
-                Glide.with(ivWeatherImage).load(data.icon).into(binding.ivWeatherImage)
+                Glide.with(root).load("https:${data.icon}").into(binding.ivWeatherImage)
             }
         }
     }
