@@ -83,6 +83,7 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
             tvMaxTemperature.text = getString(R.string.text_temperature, weatherData.maxTemp)
             tvMinTemperature.text = getString(R.string.text_temperature, weatherData.minTemp)
             tvCondition.text = weatherData.condition
+            ivWeatherImage.setImageResource(weatherData.icon)
         }
     }
 
