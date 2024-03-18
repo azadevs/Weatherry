@@ -40,6 +40,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             TabLayoutMediator(tab, viewpager) { tab, position ->
                 tab.text = types[position].name
             }.attach()
+            viewpager.isUserInputEnabled = false
         }
     }
 
