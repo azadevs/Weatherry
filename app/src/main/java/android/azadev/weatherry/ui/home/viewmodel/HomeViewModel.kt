@@ -6,13 +6,14 @@ import android.azadev.weatherry.ui.model.CurrentWeatherDisplayData
 import android.azadev.weatherry.ui.model.ForecastDayDisplayData
 import android.azadev.weatherry.ui.model.ForecastDisplayData
 import android.azadev.weatherry.ui.model.ForecastHour
+import android.azadev.weatherry.utils.Constants
 import android.azadev.weatherry.utils.Resource
 import android.azadev.weatherry.utils.parseLongToDate
 import android.azadev.weatherry.utils.parseLongToDateTime
 import android.azadev.weatherry.utils.parseLongToDayOfWeek
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -37,7 +38,7 @@ class HomeViewModel(private val repository: WeatherRepository) : ViewModel() {
     }
 
     private fun getCurrentWeatherDataByLocation() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val data =
                     repository.getWeatherDataByLocation("${41.377491},${64.585262}")
@@ -49,7 +50,7 @@ class HomeViewModel(private val repository: WeatherRepository) : ViewModel() {
                             currentTemp = data.current.tempC,
                             minTemp = data.forecast.forecastday.first().day.minTemp,
                             maxTemp = data.forecast.forecastday.first().day.maxTemp,
-                            icon = data.current.condition.icon,
+                            icon = Constants.fromWMO(data.current.condition.code),
                             condition = data.current.condition.text,
                             sunrise = data.forecast.forecastday.first().astro.sunrise,
                             sunset = data.forecast.forecastday.first().astro.sunset,
@@ -71,12 +72,11 @@ class HomeViewModel(private val repository: WeatherRepository) : ViewModel() {
     }
 
     private fun getForecastWeatherDataByLocation() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val data = repository.getWeatherDataByLocation("${41.377491},${64.585262}")
                 _forecastState.value = Resource.Success(
                     ForecastDisplayData(data.forecast.forecastday.map {
-                        Log.d("TAG10 ", "getForecastWeatherDataByLocation: ${it.dateEpoch}")
                         ForecastDayDisplayData(
                             dayOfWeek = parseLongToDayOfWeek(it.dateEpoch),
                             maxTemp = it.day.maxTemp,
