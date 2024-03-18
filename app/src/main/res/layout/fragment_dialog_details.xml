@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp"
+    tools:context=".ui.details.DetailsDialogFragment">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="@string/text_details"
+        android:textColor="?attr/colorOnBackground"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_precipitation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_precipitation_title"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/description_precipitation_icon"
+        android:src="@drawable/ic_precipitation"
+        app:layout_constraintStart_toStartOf="@id/tv_details"
+        app:layout_constraintTop_toBottomOf="@id/tv_details" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_precipitation_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:alpha="0.6"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:text="@string/text_precipitation"
+        android:textColor="?attr/colorOnBackground"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/iv_precipitation"
+        app:layout_constraintTop_toTopOf="@id/iv_precipitation" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_precipitation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:textColor="?attr/colorOnBackground"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/iv_precipitation"
+        app:layout_constraintTop_toBottomOf="@id/tv_precipitation_title"
+        tools:text="0.0 mm" />
+
+    <ImageView
+        android:id="@+id/iv_wind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/description_wind_icon"
+        android:src="@drawable/ic_wind"
+        app:layout_constraintStart_toStartOf="@id/iv_precipitation"
+        app:layout_constraintTop_toBottomOf="@id/tv_precipitation" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_wind_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:alpha="0.6"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:text="@string/text_se_wind"
+        android:textColor="?colorOnBackground"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/iv_wind"
+        app:layout_constraintTop_toBottomOf="@id/tv_precipitation_title"
+        app:layout_constraintTop_toTopOf="@id/iv_wind" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_wind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:textColor="?colorOnBackground"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/tv_wind_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_wind_title"
+        tools:text="10.23 kp\h" />
+
+    <ImageView
+        android:id="@+id/iv_humidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/description_wind_icon"
+        android:src="@drawable/ic_humidity"
+        app:layout_constraintStart_toStartOf="@id/iv_precipitation"
+        app:layout_constraintTop_toBottomOf="@id/tv_wind" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_humidity_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:alpha="0.6"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:text="@string/text_humidity"
+        android:textColor="?colorOnBackground"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/iv_humidity"
+        app:layout_constraintTop_toTopOf="@id/iv_humidity" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_humidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_humidity_title"
+        android:layout_alignStart="@id/tv_humidity_title"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:textColor="?colorOnBackground"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/tv_humidity_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_humidity_title"
+        tools:text="56 %" />
+
+    <ImageView
+        android:id="@+id/iv_visibility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/description_wind_icon"
+        android:src="@drawable/ic_visibility"
+        app:layout_constraintStart_toStartOf="@id/iv_precipitation"
+        app:layout_constraintTop_toBottomOf="@id/tv_humidity" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_visibility_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:alpha="0.6"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:text="@string/text_visibility"
+        android:textColor="?colorOnBackground"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/iv_visibility"
+        app:layout_constraintTop_toTopOf="@id/iv_visibility" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_visibility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:textColor="?colorOnBackground"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/tv_visibility_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_visibility_title"
+        tools:text="14.83 km" />
+
+    <ImageView
+        android:id="@+id/iv_uv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/description_wind_icon"
+        android:src="@drawable/ic_uv"
+        app:layout_constraintStart_toStartOf="@id/iv_precipitation"
+        app:layout_constraintTop_toBottomOf="@id/tv_visibility" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_uv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:alpha="0.6"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:text="@string/text_uv"
+        android:textColor="?colorOnBackground"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/iv_uv"
+        app:layout_constraintTop_toTopOf="@id/iv_uv" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_uv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:textColor="?colorOnBackground"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/tv_uv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_uv_title"
+        tools:text="2.0" />
+
+    <ImageView
+        android:id="@+id/iv_pressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/description_wind_icon"
+        android:src="@drawable/ic_pressure"
+        app:layout_constraintStart_toStartOf="@id/iv_precipitation"
+        app:layout_constraintTop_toBottomOf="@id/tv_uv" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_pressure_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:alpha="0.6"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:text="@string/text_pressure"
+        android:textColor="?colorOnBackground"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/iv_pressure"
+        app:layout_constraintTop_toTopOf="@id/iv_pressure" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_pressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_pressure_title"
+        android:layout_alignStart="@id/tv_pressure_title"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:textColor="?colorOnBackground"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/tv_pressure_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_pressure_title" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

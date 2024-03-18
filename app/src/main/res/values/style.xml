@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="HomeScreenToolbarTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/ubuntu_condesed</item>
+    </style>
+
+    <style name="HomeScreenSubTitle">
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">@font/ubuntu_condesed</item>
+    </style>
+</resources>

@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Weatherry</string>
+    <string name="text_in_sync">in sync</string>
+    <string name="text_c">°C</string>
+    <string name="text_temperature">%1$d °C</string>
+    <string name="description_down_arrow_image">Down arrow image</string>
+    <string name="description_up_arrow_image">Up arrow image</string>
+    <string name="description_weather_image">Weather image</string>
+    <string name="description_sunrise_image">Sunrise image</string>
+    <string name="description_sunset_image">Sunset image</string>
+    <string name="description_settings_image">Settings image button</string>
+    <string name="description_map_image_button">Map image button</string>
+    <string name="text_details">Details</string>
+    <string name="text_precipitation">Precipitation.</string>
+    <string name="text_se_wind">SE Wind</string>
+    <string name="text_humidity">Humidity</string>
+    <string name="text_visibility">Visibility</string>
+    <string name="text_uv">UV</string>
+    <string name="text_pressure">Pressure</string>
+    <string name="text_location">Location</string>
+    <string name="text_settings">Settings</string>
+    <string name="text_forecast">Forecast</string>
+    <string name="text_min">min.</string>
+    <string name="text_max">max.</string>
+    <string name="description_current_weather_icon">Current weather icon</string>
+    <string name="description_precipitation_icon">Precipitation icon</string>
+    <string name="description_wind_icon">Wind icon</string>
+</resources>

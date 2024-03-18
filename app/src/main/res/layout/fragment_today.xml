@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.9"
+        android:visibility="invisible" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.7"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        tool:text="Friday, 25 December 2020" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_current_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:textColor="?colorOnBackground"
+        android:textSize="100sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_unit"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/tv_date"
+        app:layout_constraintTop_toBottomOf="@id/tv_date"
+        app:layout_constraintVertical_bias="0.05"
+        tool:text="16" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:text="@string/text_c"
+        android:textColor="?colorOnBackground"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_current_temperature"
+        app:layout_constraintEnd_toEndOf="@id/tv_date"
+        app:layout_constraintStart_toEndOf="@id/tv_current_temperature"
+        app:layout_constraintTop_toTopOf="@id/tv_current_temperature"
+        app:layout_constraintVertical_bias="0.8" />
+
+    <ImageView
+        android:id="@+id/iv_down_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/description_down_arrow_image"
+        android:src="@drawable/ic_down_arrow"
+        app:layout_constraintEnd_toStartOf="@id/tv_min_temperature"
+        app:layout_constraintStart_toStartOf="@id/tv_current_temperature"
+        app:layout_constraintTop_toBottomOf="@id/tv_current_temperature" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_min_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:alpha="0.8"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/iv_down_arrow"
+        app:layout_constraintTop_toBottomOf="@id/tv_current_temperature"
+        app:layout_constraintTop_toTopOf="@id/iv_down_arrow"
+        tool:text="16 C" />
+
+    <ImageView
+        android:id="@+id/iv_up_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/description_up_arrow_image"
+        android:src="@drawable/ic_up_arrow"
+        app:layout_constraintEnd_toStartOf="@id/tv_max_temperature"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@id/tv_min_temperature"
+        app:layout_constraintTop_toBottomOf="@id/tv_current_temperature" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_max_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.8"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/tv_unit"
+        app:layout_constraintTop_toBottomOf="@id/tv_current_temperature"
+        app:layout_constraintTop_toTopOf="@id/iv_up_arrow"
+        tool:text="16 C" />
+
+    <ImageView
+        android:id="@+id/iv_weather_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:alpha="0.9"
+        android:contentDescription="@string/description_weather_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_up_arrow"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_condition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.8"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:minWidth="40dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@id/iv_weather_image"
+        app:layout_constraintStart_toStartOf="@id/iv_weather_image"
+        app:layout_constraintTop_toBottomOf="@id/iv_weather_image"
+        tool:text="Sunny" />
+
+    <ImageView
+        android:id="@+id/iv_sunrise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:contentDescription="@string/description_sunrise_image"
+        android:src="@drawable/ic_sunrise"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_sunrise_time"
+        app:layout_constraintTop_toBottomOf="@id/tv_condition"
+        app:layout_constraintVertical_bias="0.15" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_sunrise_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.8"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_sunrise"
+        app:layout_constraintEnd_toStartOf="@id/tv_condition"
+        app:layout_constraintTop_toTopOf="@id/iv_sunrise"
+        tool:text="09:18 AM" />
+
+    <ImageView
+        android:id="@+id/iv_sunset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/description_sunset_image"
+        android:src="@drawable/ic_sunset"
+        app:layout_constraintBottom_toBottomOf="@id/iv_sunrise"
+        app:layout_constraintStart_toEndOf="@id/tv_condition"
+        app:layout_constraintTop_toTopOf="@id/iv_sunrise" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_sunset_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:alpha="0.8"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_sunset"
+        app:layout_constraintStart_toEndOf="@id/iv_sunset"
+        app:layout_constraintTop_toTopOf="@id/iv_sunrise"
+        tool:text="06:32 PM" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
