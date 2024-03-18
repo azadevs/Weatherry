@@ -13,7 +13,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -59,12 +58,20 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
 
     private fun showLoadingProgress() {
         binding.progressBar.visible()
-        binding.cardView.visible()
+        binding.ivDownArrow.inVisible()
+        binding.ivUpArrow.inVisible()
+        binding.tvUnit.inVisible()
+        binding.ivSunrise.inVisible()
+        binding.ivSunset.inVisible()
     }
 
     private fun hideLoadingProgress() {
         binding.progressBar.inVisible()
-        binding.cardView.inVisible()
+        binding.ivDownArrow.visible()
+        binding.ivUpArrow.visible()
+        binding.tvUnit.visible()
+        binding.ivSunrise.visible()
+        binding.ivSunset.visible()
     }
 
     private fun configureUI(weatherData: CurrentWeatherDisplayData) {
@@ -76,9 +83,6 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
             tvMaxTemperature.text = getString(R.string.text_temperature, weatherData.maxTemp)
             tvMinTemperature.text = getString(R.string.text_temperature, weatherData.minTemp)
             tvCondition.text = weatherData.condition
-            Glide.with(ivWeatherImage).load("https://cdn.weatherapi.com/weather/64x64/day/176.png")
-                .into(ivWeatherImage)
-
         }
     }
 

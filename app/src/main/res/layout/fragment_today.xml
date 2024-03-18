@@ -5,13 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.9"
-        android:visibility="invisible" />
-
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
@@ -49,7 +42,7 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="@id/tv_date"
         app:layout_constraintTop_toBottomOf="@id/tv_date"
-        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintVertical_bias="0.03"
         tool:text="16" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -70,19 +63,17 @@
         android:id="@+id/iv_down_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/description_down_arrow_image"
         android:src="@drawable/ic_down_arrow"
         app:layout_constraintEnd_toStartOf="@id/tv_min_temperature"
-        app:layout_constraintStart_toStartOf="@id/tv_current_temperature"
+        app:layout_constraintStart_toStartOf="@id/tv_date"
         app:layout_constraintTop_toBottomOf="@id/tv_current_temperature" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_min_temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
         android:alpha="0.8"
         android:fontFamily="@font/ubuntu_condesed"
         android:textSize="20sp"
@@ -99,8 +90,6 @@
         android:contentDescription="@string/description_up_arrow_image"
         android:src="@drawable/ic_up_arrow"
         app:layout_constraintEnd_toStartOf="@id/tv_max_temperature"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintStart_toEndOf="@id/tv_min_temperature"
         app:layout_constraintTop_toBottomOf="@id/tv_current_temperature" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -110,7 +99,7 @@
         android:alpha="0.8"
         android:fontFamily="@font/ubuntu_condesed"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@id/tv_unit"
+        app:layout_constraintEnd_toEndOf="@id/tv_date"
         app:layout_constraintTop_toBottomOf="@id/tv_current_temperature"
         app:layout_constraintTop_toTopOf="@id/iv_up_arrow"
         tool:text="16 C" />
@@ -119,18 +108,19 @@
         android:id="@+id/iv_weather_image"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:alpha="0.9"
         android:contentDescription="@string/description_weather_image"
+        tool:src="@drawable/ic_snowyrainy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_up_arrow"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.05" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_condition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:alpha="0.8"
         android:fontFamily="@font/ubuntu_condesed"
         android:minWidth="40dp"
