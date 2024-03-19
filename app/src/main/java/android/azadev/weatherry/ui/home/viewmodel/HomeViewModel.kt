@@ -7,6 +7,7 @@ import android.azadev.weatherry.ui.model.ForecastDayDisplayData
 import android.azadev.weatherry.ui.model.ForecastDisplayData
 import android.azadev.weatherry.ui.model.ForecastHour
 import android.azadev.weatherry.utils.Constants
+import android.azadev.weatherry.utils.NetworkHelper
 import android.azadev.weatherry.utils.Resource
 import android.azadev.weatherry.utils.parseLongToDate
 import android.azadev.weatherry.utils.parseLongToDateTime
@@ -23,7 +24,10 @@ import kotlinx.coroutines.launch
  * Date : 3/16/2024
  */
 
-class HomeViewModel(private val repository: WeatherRepository) : ViewModel() {
+class HomeViewModel(
+    private val repository: WeatherRepository,
+    private val networkHelper: NetworkHelper
+) : ViewModel() {
 
     private val _currentState =
         MutableStateFlow<Resource<CurrentWeatherDisplayData>>(Resource.Loading)
@@ -40,31 +44,34 @@ class HomeViewModel(private val repository: WeatherRepository) : ViewModel() {
     private fun getCurrentWeatherDataByLocation() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val data =
-                    repository.getWeatherDataByLocation("${41.377491},${64.585262}")
-                _currentState.value =
-                    Resource.Success(
-                        CurrentWeatherDisplayData(
-                            cityName = data.current.cityName,
-                            date = parseLongToDate(data.forecast.first().dateEpoch),
-                            currentTemp = data.current.tempC,
-                            minTemp = data.forecast.first().minTemp,
-                            maxTemp = data.forecast.first().maxTemp,
-                            icon = Constants.fromWMO(data.current.code),
-                            condition = data.current.text,
-                            sunrise = data.forecast.first().sunrise,
-                            sunset = data.forecast.first().sunset,
-                            currentWeatherDetails = CurrentWeatherDetails(
-                                wind = data.current.windKph,
-                                pressure = data.current.pressureIn,
-                                precipitation = data.current.precipIn,
-                                humidity = data.current.humidity,
-                                vis = data.current.vis,
-                                uv = data.current.uv
+                if (networkHelper.isNetworkConnected()) {
+                    val data =
+                        repository.getWeatherDataByLocation("${41.377491},${64.585262}")
+                    _currentState.value =
+                        Resource.Success(
+                            CurrentWeatherDisplayData(
+                                cityName = data.current.cityName,
+                                date = parseLongToDate(data.forecast.first().dateEpoch),
+                                currentTemp = data.current.tempC,
+                                minTemp = data.forecast.first().minTemp,
+                                maxTemp = data.forecast.first().maxTemp,
+                                icon = Constants.fromWMO(data.current.code),
+                                condition = data.current.text,
+                                sunrise = data.forecast.first().sunrise,
+                                sunset = data.forecast.first().sunset,
+                                currentWeatherDetails = CurrentWeatherDetails(
+                                    wind = data.current.windKph,
+                                    pressure = data.current.pressureIn,
+                                    precipitation = data.current.precipIn,
+                                    humidity = data.current.humidity,
+                                    vis = data.current.vis,
+                                    uv = data.current.uv
+                                )
                             )
                         )
-                    )
-
+                } else {
+                    _currentState.value = Resource.Error("No internet")
+                }
             } catch (e: Exception) {
                 _currentState.value = Resource.Error(e.localizedMessage ?: "error occurred")
             }

@@ -60,6 +60,6 @@ val networkModule = module {
     }
 
     viewModel {
-        HomeViewModel(get())
+        HomeViewModel(get(), get())
     }
 }
