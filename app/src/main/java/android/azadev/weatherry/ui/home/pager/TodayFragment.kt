@@ -2,7 +2,9 @@ package android.azadev.weatherry.ui.home.pager
 
 import android.azadev.weatherry.R
 import android.azadev.weatherry.databinding.FragmentTodayBinding
+import android.azadev.weatherry.ui.home.HomeFragmentDirections
 import android.azadev.weatherry.ui.home.viewmodel.HomeViewModel
+import android.azadev.weatherry.ui.model.CurrentWeatherDetails
 import android.azadev.weatherry.ui.model.CurrentWeatherDisplayData
 import android.azadev.weatherry.utils.Resource
 import android.azadev.weatherry.utils.UiExtensions.inVisible
@@ -13,6 +15,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,11 +31,21 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
 
     private val viewModel: HomeViewModel by viewModel()
 
+    private var currentWeatherDetails: CurrentWeatherDetails? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentTodayBinding.bind(view)
 
         configureObserver()
+
+        binding.tvDetails.setOnClickListener {
+            val homeFragmentToDetailsDialogFragment =
+                HomeFragmentDirections.actionHomeFragmentToDetailsDialogFragment(
+                    currentWeatherDetails
+                )
+            findNavController().navigate(homeFragmentToDetailsDialogFragment)
+        }
     }
 
     private fun configureObserver() {
@@ -84,6 +97,8 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
             tvMinTemperature.text = getString(R.string.text_temperature, weatherData.minTemp)
             tvCondition.text = weatherData.condition
             ivWeatherImage.setImageResource(weatherData.icon)
+            currentWeatherDetails = weatherData.currentWeatherDetails
+
         }
     }
 
@@ -91,5 +106,6 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        currentWeatherDetails = null
     }
 }

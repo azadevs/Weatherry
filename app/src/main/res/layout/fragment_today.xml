@@ -109,26 +109,26 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:contentDescription="@string/description_weather_image"
-        tool:src="@drawable/ic_snowyrainy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_up_arrow"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.1"
+        tool:src="@drawable/ic_snowyrainy" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_condition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintVertical_bias="0.1"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:alpha="0.8"
         android:fontFamily="@font/ubuntu_condesed"
         android:minWidth="40dp"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/iv_weather_image"
         app:layout_constraintStart_toStartOf="@id/iv_weather_image"
         app:layout_constraintTop_toBottomOf="@id/iv_weather_image"
+        app:layout_constraintVertical_bias="0.1"
         tool:text="Sunny" />
 
     <ImageView
@@ -178,4 +178,21 @@
         app:layout_constraintTop_toTopOf="@id/iv_sunrise"
         tool:text="06:32 PM" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.8"
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/ubuntu_condesed"
+        android:padding="4dp"
+        android:text="@string/text_details"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_sunset_time"
+        app:layout_constraintVertical_bias="0.2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
