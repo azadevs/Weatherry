@@ -9,8 +9,13 @@ data class ForecastDay(
     val icon: String,
     val maxTemp: Int,
     val minTemp: Int,
-    val dateEpoch: Long,
+    val dayOfWeek: String,
     val hour: List<Hour>,
     val sunrise: String,
     val sunset: String
+)
+
+data class Hour(
+    val time: String,
+    val icon: String
 )

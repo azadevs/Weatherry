@@ -1,17 +1,13 @@
 package android.azadev.weatherry.ui.home.viewmodel
 
+import android.azadev.weatherry.domain.model.CurrentData
+import android.azadev.weatherry.domain.model.ForecastData
 import android.azadev.weatherry.domain.repository.WeatherRepository
-import android.azadev.weatherry.ui.model.CurrentWeatherDetails
-import android.azadev.weatherry.ui.model.CurrentWeatherDisplayData
-import android.azadev.weatherry.ui.model.ForecastDayDisplayData
-import android.azadev.weatherry.ui.model.ForecastDisplayData
-import android.azadev.weatherry.ui.model.ForecastHour
-import android.azadev.weatherry.utils.Constants
-import android.azadev.weatherry.utils.NetworkHelper
-import android.azadev.weatherry.utils.Resource
-import android.azadev.weatherry.utils.parseLongToDate
-import android.azadev.weatherry.utils.parseLongToDateTime
-import android.azadev.weatherry.utils.parseLongToDayOfWeek
+import android.azadev.weatherry.domain.util.DataError
+import android.azadev.weatherry.domain.util.Result
+import android.azadev.weatherry.ui.utils.NetworkHelper
+import android.azadev.weatherry.ui.utils.ViewState
+import android.azadev.weatherry.ui.utils.asUiText
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -25,15 +21,13 @@ import kotlinx.coroutines.launch
  */
 
 class HomeViewModel(
-    private val repository: WeatherRepository,
-    private val networkHelper: NetworkHelper
+    private val repository: WeatherRepository, private val networkHelper: NetworkHelper
 ) : ViewModel() {
 
-    private val _currentState =
-        MutableStateFlow<Resource<CurrentWeatherDisplayData>>(Resource.Loading)
+    private val _currentState = MutableStateFlow<ViewState<CurrentData>>(ViewState.Loading)
     val currentState = _currentState.asStateFlow()
 
-    private val _forecastState = MutableStateFlow<Resource<ForecastDisplayData>>(Resource.Loading)
+    private val _forecastState = MutableStateFlow<ViewState<ForecastData>>(ViewState.Loading)
     val forecastState = _forecastState.asStateFlow()
 
     init {
@@ -43,64 +37,40 @@ class HomeViewModel(
 
     private fun getCurrentWeatherDataByLocation() {
         viewModelScope.launch(Dispatchers.IO) {
-            try {
-                if (networkHelper.isNetworkConnected()) {
-                    val data =
-                        repository.getWeatherDataByLocation("${41.377491},${64.585262}")
-                    _currentState.value =
-                        Resource.Success(
-                            CurrentWeatherDisplayData(
-                                cityName = data.current.cityName,
-                                date = parseLongToDate(data.forecast.first().dateEpoch),
-                                currentTemp = data.current.tempC,
-                                minTemp = data.forecast.first().minTemp,
-                                maxTemp = data.forecast.first().maxTemp,
-                                icon = Constants.fromWMO(data.current.code),
-                                condition = data.current.text,
-                                sunrise = data.forecast.first().sunrise,
-                                sunset = data.forecast.first().sunset,
-                                currentWeatherDetails = CurrentWeatherDetails(
-                                    wind = data.current.windKph,
-                                    pressure = data.current.pressureIn,
-                                    precipitation = data.current.precipIn,
-                                    humidity = data.current.humidity,
-                                    vis = data.current.vis,
-                                    uv = data.current.uv
-                                )
-                            )
+            if (networkHelper.isNetworkConnected()) {
+                when (val result = repository.getCurrentWeatherData("${41.377491},${64.585262}")) {
+                    is Result.Error -> {
+                        _currentState.value = ViewState.Error(result.error.asUiText())
+                    }
+
+                    is Result.Success -> {
+                        _currentState.value = ViewState.Success(
+                            result.data
                         )
-                } else {
-                    _currentState.value = Resource.Error("No internet")
+                    }
                 }
-            } catch (e: Exception) {
-                _currentState.value = Resource.Error(e.localizedMessage ?: "error occurred")
+            } else {
+                _currentState.value = ViewState.Error(DataError.Network.NO_INTERNET.asUiText())
             }
         }
     }
 
     private fun getForecastWeatherDataByLocation() {
         viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val data = repository.getWeatherDataByLocation("${41.377491},${64.585262}")
-                _forecastState.value = Resource.Success(
-                    ForecastDisplayData(data.forecast.map {
-                        ForecastDayDisplayData(
-                            dayOfWeek = parseLongToDayOfWeek(it.dateEpoch),
-                            maxTemp = it.maxTemp,
-                            minTemp = it.minTemp,
-                            icon = it.icon,
-                            hour = it.hour.map { hour ->
-                                ForecastHour(
-                                    icon = hour.icon,
-                                    time = parseLongToDateTime(hour.timeEpoch)
-                                )
-                            }
+            if (networkHelper.isNetworkConnected()) {
+                when (val result = repository.getForecastWeatherData("${41.377491},${64.585262}")) {
+                    is Result.Error -> {
+                        _forecastState.value = ViewState.Error(result.error.asUiText())
+                    }
 
+                    is Result.Success -> {
+                        _forecastState.value = ViewState.Success(
+                            result.data
                         )
-                    })
-                )
-            } catch (e: Exception) {
-                _forecastState.value = Resource.Error(e.localizedMessage ?: "error occurred")
+                    }
+                }
+            } else {
+                _forecastState.value = ViewState.Error(DataError.Network.NO_INTERNET.asUiText())
             }
         }
     }

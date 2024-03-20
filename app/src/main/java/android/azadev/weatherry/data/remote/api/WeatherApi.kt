@@ -13,7 +13,13 @@ import retrofit2.http.Query
 interface WeatherApi {
 
     @GET("forecast.json")
-    suspend fun getCurrentLocation(
+    suspend fun getCurrentWeatherLocation(
+        @Query("key") key: String = BuildConfig.WEATHER_API_KEY,
+        @Query("q") a: String,
+    ): WeatherResponse
+
+    @GET("forecast.json")
+    suspend fun getForecastDaysWeatherByLocation(
         @Query("key") key: String = BuildConfig.WEATHER_API_KEY,
         @Query("q") a: String,
         @Query("days") day: Int = 7

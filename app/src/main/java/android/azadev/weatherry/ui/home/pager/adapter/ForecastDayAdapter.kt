@@ -2,8 +2,7 @@ package android.azadev.weatherry.ui.home.pager.adapter
 
 import android.azadev.weatherry.R
 import android.azadev.weatherry.databinding.ItemDayBinding
-import android.azadev.weatherry.ui.model.ForecastDayDisplayData
-import android.azadev.weatherry.ui.model.ForecastDisplayData
+import android.azadev.weatherry.domain.model.ForecastDay
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -16,13 +15,13 @@ import com.bumptech.glide.Glide
  */
 
 class ForecastDayAdapter(
-    private val forecastDays: ForecastDisplayData
+    private val forecastDays: List<ForecastDay>
 ) : RecyclerView.Adapter<ForecastDayAdapter.DayViewHolder>() {
     val pool = RecycledViewPool()
 
     inner class DayViewHolder(private val binding: ItemDayBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(data: ForecastDayDisplayData) {
+        fun onBind(data: ForecastDay) {
             binding.apply {
                 tvDayOfWeek.text = data.dayOfWeek
                 tvMaxTemperature.text =
@@ -46,8 +45,8 @@ class ForecastDayAdapter(
     }
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
-        holder.onBind(forecastDays.forecast[position])
+        holder.onBind(forecastDays[position])
     }
 
-    override fun getItemCount(): Int = forecastDays.forecast.size
+    override fun getItemCount(): Int = forecastDays.size
 }

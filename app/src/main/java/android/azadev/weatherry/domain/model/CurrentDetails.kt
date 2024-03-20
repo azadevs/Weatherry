@@ -1,15 +1,15 @@
-package android.azadev.weatherry.ui.model
+package android.azadev.weatherry.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 /**
  * Created by : Azamat Kalmurzayev
- * Date : 3/18/2024
+ * Date : 3/19/2024
  */
 
 @Parcelize
-data class CurrentWeatherDetails(
+data class CurrentDetails(
     val wind: Double,
     val pressure: Double,
     val precipitation: Double,

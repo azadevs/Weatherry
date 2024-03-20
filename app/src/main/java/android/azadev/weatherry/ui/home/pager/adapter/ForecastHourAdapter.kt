@@ -1,7 +1,7 @@
 package android.azadev.weatherry.ui.home.pager.adapter
 
 import android.azadev.weatherry.databinding.ItemHourBinding
-import android.azadev.weatherry.ui.model.ForecastHour
+import android.azadev.weatherry.domain.model.Hour
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,11 +12,11 @@ import com.bumptech.glide.Glide
  * Date : 3/17/2024
  */
 
-class ForecastHourAdapter(private val forecastHours: List<ForecastHour>) :
+class ForecastHourAdapter(private val forecastHours: List<Hour>) :
     RecyclerView.Adapter<ForecastHourAdapter.HourViewHolder>() {
     inner class HourViewHolder(private val binding: ItemHourBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(data: ForecastHour) {
+        fun onBind(data: Hour) {
             binding.apply {
                 tvTime.text = data.time
                 Glide.with(root).load("https:${data.icon}").into(binding.ivWeatherImage)

@@ -5,7 +5,6 @@ package android.azadev.weatherry.domain.model
  * Date : 3/16/2024
  */
 
-data class WeatherData(
-    val current: Current,
+data class ForecastData(
     val forecast: List<ForecastDay>,
 )

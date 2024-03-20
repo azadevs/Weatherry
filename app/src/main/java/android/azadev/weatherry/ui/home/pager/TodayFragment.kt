@@ -2,13 +2,14 @@ package android.azadev.weatherry.ui.home.pager
 
 import android.azadev.weatherry.R
 import android.azadev.weatherry.databinding.FragmentTodayBinding
+import android.azadev.weatherry.domain.model.CurrentData
+import android.azadev.weatherry.domain.model.CurrentDetails
 import android.azadev.weatherry.ui.home.HomeFragmentDirections
 import android.azadev.weatherry.ui.home.viewmodel.HomeViewModel
-import android.azadev.weatherry.ui.model.CurrentWeatherDetails
-import android.azadev.weatherry.ui.model.CurrentWeatherDisplayData
-import android.azadev.weatherry.utils.Resource
-import android.azadev.weatherry.utils.UiExtensions.inVisible
-import android.azadev.weatherry.utils.UiExtensions.visible
+import android.azadev.weatherry.ui.utils.UiExtensions.inVisible
+import android.azadev.weatherry.ui.utils.UiExtensions.visible
+import android.azadev.weatherry.ui.utils.UiText
+import android.azadev.weatherry.ui.utils.ViewState
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -31,7 +32,7 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
 
     private val viewModel: HomeViewModel by viewModel()
 
-    private var currentWeatherDetails: CurrentWeatherDetails? = null
+    private var currentDetails: CurrentDetails? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,7 +43,7 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         binding.tvDetails.setOnClickListener {
             val homeFragmentToDetailsDialogFragment =
                 HomeFragmentDirections.actionHomeFragmentToDetailsDialogFragment(
-                    currentWeatherDetails
+                    currentDetails!!
                 )
             findNavController().navigate(homeFragmentToDetailsDialogFragment)
         }
@@ -51,22 +52,30 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
     private fun configureObserver() {
         viewModel.currentState.flowWithLifecycle(viewLifecycleOwner.lifecycle).onEach { result ->
             when (result) {
-                is Resource.Error -> {
+                is ViewState.Error -> {
                     hideLoadingProgress()
-                    Toast.makeText(requireContext(), result.data, Toast.LENGTH_SHORT).show()
+                    showErrorMessage(result.error)
                 }
 
-                Resource.Loading -> {
+                ViewState.Loading -> {
                     showLoadingProgress()
                 }
 
-                is Resource.Success -> {
+                is ViewState.Success -> {
                     hideLoadingProgress()
                     configureUI(result.data)
                 }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
+    }
+
+    private fun showErrorMessage(error: UiText) {
+        Toast.makeText(
+            requireContext(),
+            error.asString(requireContext()),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     private fun showLoadingProgress() {
@@ -87,17 +96,17 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         binding.ivSunset.visible()
     }
 
-    private fun configureUI(weatherData: CurrentWeatherDisplayData) {
+    private fun configureUI(data: CurrentData) {
         binding.apply {
-            tvSunriseTime.text = weatherData.sunrise
-            tvSunsetTime.text = weatherData.sunset
-            tvDate.text = weatherData.date
-            tvCurrentTemperature.text = weatherData.currentTemp.toString()
-            tvMaxTemperature.text = getString(R.string.text_temperature, weatherData.maxTemp)
-            tvMinTemperature.text = getString(R.string.text_temperature, weatherData.minTemp)
-            tvCondition.text = weatherData.condition
-            ivWeatherImage.setImageResource(weatherData.icon)
-            currentWeatherDetails = weatherData.currentWeatherDetails
+            tvSunriseTime.text = data.sunrise
+            tvSunsetTime.text = data.sunset
+            tvDate.text = data.date
+            tvCurrentTemperature.text = data.currentTemp.toString()
+            tvMaxTemperature.text = getString(R.string.text_temperature, data.maxTemp)
+            tvMinTemperature.text = getString(R.string.text_temperature, data.minTemp)
+            tvCondition.text = data.condition
+            ivWeatherImage.setImageResource(data.icon)
+            currentDetails = data.details
 
         }
     }
@@ -106,6 +115,6 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        currentWeatherDetails = null
+        currentDetails = null
     }
 }

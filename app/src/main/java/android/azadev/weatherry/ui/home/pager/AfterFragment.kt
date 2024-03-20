@@ -2,14 +2,14 @@ package android.azadev.weatherry.ui.home.pager
 
 import android.azadev.weatherry.R
 import android.azadev.weatherry.databinding.FragmentAfterBinding
-import android.azadev.weatherry.ui.model.ForecastDisplayData
+import android.azadev.weatherry.domain.model.ForecastData
 import android.azadev.weatherry.ui.home.pager.adapter.ForecastDayAdapter
 import android.azadev.weatherry.ui.home.viewmodel.HomeViewModel
-import android.azadev.weatherry.utils.Resource
-import android.azadev.weatherry.utils.UiExtensions.inVisible
-import android.azadev.weatherry.utils.UiExtensions.visible
+import android.azadev.weatherry.ui.utils.UiExtensions.inVisible
+import android.azadev.weatherry.ui.utils.UiExtensions.visible
+import android.azadev.weatherry.ui.utils.UiText
+import android.azadev.weatherry.ui.utils.ViewState
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -43,16 +43,16 @@ class AfterFragment : Fragment(R.layout.fragment_after) {
         viewModel.forecastState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { result ->
                 when (result) {
-                    is Resource.Error -> {
+                    is ViewState.Error -> {
                         hideLoadingProgress()
-                        showErrorMessage(result.data)
+                        showErrorMessage(result.error)
                     }
 
-                    Resource.Loading -> {
+                    ViewState.Loading -> {
                         showLoadingProgress()
                     }
 
-                    is Resource.Success -> {
+                    is ViewState.Success -> {
                         hideLoadingProgress()
                         configureUI(result.data)
                     }
@@ -60,8 +60,9 @@ class AfterFragment : Fragment(R.layout.fragment_after) {
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun showErrorMessage(error: String) {
-        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+    private fun showErrorMessage(error: UiText) {
+        Toast.makeText(requireContext(), error.asString(requireContext()), Toast.LENGTH_SHORT)
+            .show()
     }
 
     private fun showLoadingProgress() {
@@ -72,10 +73,9 @@ class AfterFragment : Fragment(R.layout.fragment_after) {
         binding.progressBar.inVisible()
     }
 
-    private fun configureUI(data: ForecastDisplayData) {
-        val adapter = ForecastDayAdapter(data)
+    private fun configureUI(data: ForecastData) {
+        val adapter = ForecastDayAdapter(data.forecast)
         binding.rvForecast.adapter = adapter
-        Log.d("TAG10 ", "getForecastWeatherDataByLocation: ${data.forecast.last().dayOfWeek}")
     }
 
     override fun onDestroyView() {

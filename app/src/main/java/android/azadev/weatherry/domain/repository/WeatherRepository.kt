@@ -1,6 +1,9 @@
 package android.azadev.weatherry.domain.repository
 
-import android.azadev.weatherry.domain.model.WeatherData
+import android.azadev.weatherry.domain.model.CurrentData
+import android.azadev.weatherry.domain.model.ForecastData
+import android.azadev.weatherry.domain.util.DataError
+import android.azadev.weatherry.domain.util.Result
 
 /**
  * Created by : Azamat Kalmurzayev
@@ -9,5 +12,7 @@ import android.azadev.weatherry.domain.model.WeatherData
 
 interface WeatherRepository {
 
-    suspend fun getWeatherDataByLocation(location: String): WeatherData
+    suspend fun getCurrentWeatherData(location: String): Result<CurrentData, DataError.Network>
+
+    suspend fun getForecastWeatherData(location: String): Result<ForecastData, DataError.Network>
 }

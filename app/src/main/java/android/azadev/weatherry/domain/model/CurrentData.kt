@@ -1,4 +1,4 @@
-package android.azadev.weatherry.ui.model
+package android.azadev.weatherry.domain.model
 
 import androidx.annotation.DrawableRes
 
@@ -7,7 +7,7 @@ import androidx.annotation.DrawableRes
  * Date : 3/17/2024
  */
 
-data class CurrentWeatherDisplayData(
+data class CurrentData(
     val cityName: String,
     val date: String,
     val currentTemp: Int,
@@ -17,5 +17,5 @@ data class CurrentWeatherDisplayData(
     val condition: String,
     val sunrise: String,
     val sunset: String,
-    val currentWeatherDetails: CurrentWeatherDetails
+    val details: CurrentDetails
 )
