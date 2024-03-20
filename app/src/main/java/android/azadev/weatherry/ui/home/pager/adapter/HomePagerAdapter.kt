@@ -2,7 +2,7 @@ package android.azadev.weatherry.ui.home.pager.adapter
 
 import android.azadev.weatherry.ui.home.pager.AfterFragment
 import android.azadev.weatherry.ui.home.pager.TodayFragment
-import android.azadev.weatherry.utils.ForecastType
+import android.azadev.weatherry.ui.utils.ForecastType
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 

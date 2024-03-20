@@ -1,4 +1,4 @@
-package android.azadev.weatherry.utils
+package android.azadev.weatherry.ui.utils
 
 import android.content.Context
 import android.net.ConnectivityManager

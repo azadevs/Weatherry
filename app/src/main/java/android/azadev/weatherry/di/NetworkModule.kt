@@ -6,7 +6,7 @@ import android.azadev.weatherry.data.repository.ProdWeatherRepository
 import android.azadev.weatherry.domain.repository.WeatherRepository
 import android.azadev.weatherry.ui.home.viewmodel.HomeViewModel
 import android.azadev.weatherry.utils.Constants
-import android.azadev.weatherry.utils.NetworkHelper
+import android.azadev.weatherry.ui.utils.NetworkHelper
 import android.content.Context
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

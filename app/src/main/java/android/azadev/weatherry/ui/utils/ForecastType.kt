@@ -1,4 +1,4 @@
-package android.azadev.weatherry.utils
+package android.azadev.weatherry.ui.utils
 
 /**
  * Created by : Azamat Kalmurzayev

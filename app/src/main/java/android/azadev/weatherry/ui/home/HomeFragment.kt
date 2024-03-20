@@ -3,7 +3,7 @@ package android.azadev.weatherry.ui.home
 import android.azadev.weatherry.R
 import android.azadev.weatherry.databinding.FragmentHomeBinding
 import android.azadev.weatherry.ui.home.pager.adapter.HomePagerAdapter
-import android.azadev.weatherry.utils.ForecastType
+import android.azadev.weatherry.ui.utils.ForecastType
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -53,7 +53,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                     return when (menuItem.itemId) {
-                        R.id.menu_location -> {
+                        R.id.menu_settings -> {
                             true
                         }
 
