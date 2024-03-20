@@ -23,7 +23,7 @@ data class WeatherCurrent(
     @SerializedName("last_updated")
     val lastUpdated: String,
     @SerializedName("last_updated_epoch")
-    val lastUpdatedEpoch: Int,
+    val lastUpdatedEpoch: Long,
     @SerializedName("precip_in")
     val precipIn: Double,
     @SerializedName("precip_mm")
