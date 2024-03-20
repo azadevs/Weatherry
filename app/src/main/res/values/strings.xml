@@ -25,4 +25,13 @@
     <string name="description_current_weather_icon">Current weather icon</string>
     <string name="description_precipitation_icon">Precipitation icon</string>
     <string name="description_wind_icon">Wind icon</string>
+    <string name="missing_permission">Missing location permission!.</string>
+    <string name="location_disabled">Location is turned off.</string>
+    <string name="gps_fix_failed">Location signal weak.</string>
+    <string name="unknown_error">An unknown error occurred.</string>
+    <string name="time_out">The request timed out.</string>
+    <string name="too_many_request">We\'re experiencing a temporary delay. Please try again in a few moments.</string>
+    <string name="no_internet">Couldn\'t reach server. Check your internet connection.</string>
+    <string name="server_error">Oops, something went wrong. Please try again.</string>
+
 </resources>
