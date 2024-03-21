@@ -21,6 +21,6 @@
         tools:layout="@layout/fragment_dialog_details" >
         <argument
             android:name="details"
-            app:argType="android.azadev.weatherry.ui.model.CurrentWeatherDetails" />
+            app:argType="android.azadev.weatherry.domain.model.CurrentDetails" />
     </dialog>
 </navigation>
