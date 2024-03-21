@@ -40,6 +40,7 @@ class AfterFragment : Fragment(R.layout.fragment_after) {
     }
 
     private fun configureObserver() {
+        viewModel.getForecastWeatherDataByLocation()
         viewModel.forecastState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { result ->
                 when (result) {

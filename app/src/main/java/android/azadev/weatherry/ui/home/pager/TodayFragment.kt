@@ -13,6 +13,7 @@ import android.azadev.weatherry.ui.utils.ViewState
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -34,6 +35,11 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
 
     private var currentDetails: CurrentDetails? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        configureRequestPermission()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentTodayBinding.bind(view)
@@ -47,6 +53,22 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
                 )
             findNavController().navigate(homeFragmentToDetailsDialogFragment)
         }
+    }
+
+    private fun configureRequestPermission() {
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) {
+            viewModel.getCurrentWeatherDataByLocation()
+            viewModel.getForecastWeatherDataByLocation()
+        }.launch(
+            arrayOf(
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        )
+
+
     }
 
     private fun configureObserver() {
@@ -85,6 +107,7 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         binding.tvUnit.inVisible()
         binding.ivSunrise.inVisible()
         binding.ivSunset.inVisible()
+        binding.tvDetails.inVisible()
     }
 
     private fun hideLoadingProgress() {
@@ -94,6 +117,7 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         binding.tvUnit.visible()
         binding.ivSunrise.visible()
         binding.ivSunset.visible()
+        binding.tvDetails.visible()
     }
 
     private fun configureUI(data: CurrentData) {
