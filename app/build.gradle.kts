@@ -73,5 +73,7 @@ dependencies {
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
+    implementation("com.google.android.gms:play-services-location:21.2.0")
+
 
 }
