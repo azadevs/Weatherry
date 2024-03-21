@@ -1,7 +1,7 @@
 package android.azadev.weatherry.application
 
 import android.app.Application
-import android.azadev.weatherry.di.networkModule
+import android.azadev.weatherry.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -18,7 +18,7 @@ class WeatherApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@WeatherApplication)
-            modules(networkModule)
+            modules(appModule)
         }
     }
 }

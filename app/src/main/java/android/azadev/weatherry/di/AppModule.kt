@@ -1,13 +1,16 @@
 package android.azadev.weatherry.di
 
 import android.azadev.weatherry.BuildConfig
+import android.azadev.weatherry.data.location.ProdLocationTracker
 import android.azadev.weatherry.data.remote.api.WeatherApi
 import android.azadev.weatherry.data.repository.ProdWeatherRepository
+import android.azadev.weatherry.domain.location.LocationTracker
 import android.azadev.weatherry.domain.repository.WeatherRepository
 import android.azadev.weatherry.ui.home.viewmodel.HomeViewModel
-import android.azadev.weatherry.utils.Constants
 import android.azadev.weatherry.ui.utils.NetworkHelper
+import android.azadev.weatherry.utils.Constants
 import android.content.Context
+import com.google.android.gms.location.LocationServices
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
@@ -37,7 +40,11 @@ private fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
 
 private fun provideApiService(retrofit: Retrofit) = retrofit.create(WeatherApi::class.java)
 
-val networkModule = module {
+private fun provideFusedLocation(context: Context) =
+    LocationServices.getFusedLocationProviderClient(context)
+
+
+val appModule = module {
 
     single {
         provideNetworkHelper(get())
@@ -60,6 +67,14 @@ val networkModule = module {
     }
 
     viewModel {
-        HomeViewModel(get(), get())
+        HomeViewModel(get(), get(),get())
+    }
+
+    single {
+        provideFusedLocation(get())
+    }
+
+    single<LocationTracker> {
+        ProdLocationTracker(get(), get())
     }
 }
