@@ -5,13 +5,8 @@ import android.azadev.weatherry.databinding.FragmentHomeBinding
 import android.azadev.weatherry.ui.home.pager.adapter.HomePagerAdapter
 import android.azadev.weatherry.ui.utils.ForecastType
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import com.google.android.material.tabs.TabLayoutMediator
 
 /**
@@ -29,7 +24,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         configurePagerAndTab()
 
-        configureMenu()
     }
 
     private fun configurePagerAndTab() {
@@ -42,28 +36,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }.attach()
             viewpager.isUserInputEnabled = false
         }
-    }
-
-    private fun configureMenu() {
-        requireActivity().addMenuProvider(
-            object : MenuProvider {
-                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                    menuInflater.inflate(R.menu.menu_main, menu)
-                }
-
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    return when (menuItem.itemId) {
-                        R.id.menu_settings -> {
-                            true
-                        }
-
-                        else -> {
-                            false
-                        }
-                    }
-                }
-            }, viewLifecycleOwner, Lifecycle.State.RESUMED
-        )
     }
 
     override fun onDestroyView() {
