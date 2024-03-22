@@ -1,19 +1,29 @@
 package android.azadev.weatherry.ui.home.pager
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.azadev.weatherry.BuildConfig
 import android.azadev.weatherry.R
 import android.azadev.weatherry.databinding.FragmentTodayBinding
 import android.azadev.weatherry.domain.model.CurrentData
 import android.azadev.weatherry.domain.model.CurrentDetails
+import android.azadev.weatherry.ui.WeatherActivity
 import android.azadev.weatherry.ui.home.HomeFragmentDirections
 import android.azadev.weatherry.ui.home.viewmodel.HomeViewModel
 import android.azadev.weatherry.ui.utils.UiExtensions.inVisible
 import android.azadev.weatherry.ui.utils.UiExtensions.visible
 import android.azadev.weatherry.ui.utils.UiText
 import android.azadev.weatherry.ui.utils.ViewState
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -35,14 +45,16 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
 
     private var currentDetails: CurrentDetails? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        configureRequestPermission()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentTodayBinding.bind(view)
+
+
+        if (!checkPermissions()) {
+            requestPermissions()
+        } else {
+            viewModel.getCurrentWeatherDataByLocation()
+        }
 
         configureObserver()
 
@@ -55,20 +67,57 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         }
     }
 
-    private fun configureRequestPermission() {
-        registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) {
+    private val permissionsLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { results ->
+        handlePermissionResults(results)
+    }
+
+    private fun checkPermissions(): Boolean {
+        val coarseLocation = ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+        val fineLocation = ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+        return coarseLocation && fineLocation
+    }
+
+    @SuppressLint("NewApi")
+    private fun handlePermissionResults(results: Map<String, Boolean>) {
+        val allGranted = results.values.all { it }
+        if (allGranted) {
             viewModel.getCurrentWeatherDataByLocation()
-            viewModel.getForecastWeatherDataByLocation()
-        }.launch(
-            arrayOf(
-                android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            )
+        } else {
+            val deniedPermission = results.filter { !it.value }.keys.toList()
+            if (shouldShowRequestPermissionRationale(deniedPermission[0])) {
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Permissions")
+                    .setMessage("This app needs Location permission to provide weather updates specific to your area.")
+                    .setPositiveButton("Ok") { dialog, _ ->
+                        dialog.dismiss()
+                        requestPermissions()
+                    }.show()
+
+            } else {
+                val uri: Uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    data = uri
+                    startActivity(this)
+                }
+            }
+        }
+    }
+
+    private fun requestPermissions() {
+        val permissions = arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
         )
-
-
+        permissionsLauncher.launch(permissions)
     }
 
     private fun configureObserver() {
@@ -131,7 +180,7 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
             tvCondition.text = data.condition
             ivWeatherImage.setImageResource(data.icon)
             currentDetails = data.details
-
+            (activity as WeatherActivity).supportActionBar?.title=data.cityName
         }
     }
 
