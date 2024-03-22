@@ -3,9 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.WeatherActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:subtitle="@string/text_current_location"
+        app:subtitleTextAppearance="@style/HomeScreenSubTitle"
+        app:titleTextAppearance="@style/HomeScreenToolbarTitle" />
 
     <fragment
         android:id="@+id/nav_host"
