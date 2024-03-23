@@ -36,5 +36,6 @@
     <string name="location_permission_required">Location permissions required.</string>
     <string name="go_to_settings">Go to settings</string>
     <string name="text_current_location">Current Location</string>
+    <string name="text_city_country_name">%1$s, %2$s</string>
 
 </resources>

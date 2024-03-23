@@ -180,7 +180,8 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
             tvCondition.text = data.condition
             ivWeatherImage.setImageResource(data.icon)
             currentDetails = data.details
-            (activity as WeatherActivity).supportActionBar?.title=data.cityName
+            (activity as WeatherActivity).supportActionBar?.title =
+                getString(R.string.text_city_country_name, data.cityName, data.country)
         }
     }
 
