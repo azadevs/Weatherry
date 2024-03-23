@@ -33,7 +33,8 @@ fun WeatherResponse.toCurrentData(): CurrentData = CurrentData(
     icon = Constants.fromWMO(current.condition.code),
     condition = current.condition.text,
     sunrise = forecast.forecastday.first().astro.sunrise,
-    sunset = forecast.forecastday.first().astro.sunset
+    sunset = forecast.forecastday.first().astro.sunset,
+    country = location.country
 )
 
 fun WeatherResponse.toForecastData(): ForecastData =

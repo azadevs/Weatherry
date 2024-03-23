@@ -9,6 +9,7 @@ import androidx.annotation.DrawableRes
 
 data class CurrentData(
     val cityName: String,
+    val country: String,
     val date: String,
     val currentTemp: Int,
     val minTemp: Int,
